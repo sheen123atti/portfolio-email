@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/", router);
-app.listen(5000, () => console.log("Server Running"));
+app.listen(5001, () => console.log("Server Running"));
 // console.log(process.env.RECEIVER_EMAIL);
 // console.log(process.env.RECEIVER_PASS);
 const user = process.env.RECEIVER_EMAIL;
@@ -38,12 +38,13 @@ contactEmail.verify((error) => {
 });
 
 router.post("/contact", (req, res) => {
-  const name = req.body.firstName + req.body.lastName;
+  const name = req.body.firstName + " " + req.body.lastName;
   const email = req.body.email;
   const message = req.body.message;
   const phone = req.body.phone;
+  console.log("Email from contact form:", email);
   const mail = {
-    from: name,
+    from: `${email}`,
     to: user,
     subject: "Contact Form Submission - Portfolio",
     html: `<p>Name: ${name}</p>
